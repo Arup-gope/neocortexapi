@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Damir Dobric. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NeoCortexApi;
 using NeoCortexApi.Classifiers;
 using NeoCortexApi.Encoders;
 using NeoCortexApi.Entities;
@@ -11,8 +12,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
-namespace NeoCortexApi.Experiments
+namespace HtmClassifierUnitTest
 {
+    
     /// <summary>
     /// Check out student paper in the following URL: https://github.com/ddobric/neocortexapi/blob/master/NeoCortexApi/Documentation/Experiments/ML-19-20_20-5.4_HtmSparsityExperiments_Paper.pdf
     /// </summary>
@@ -139,7 +141,7 @@ namespace NeoCortexApi.Experiments
                         var activeColumns = layer1.GetResult("sp") as int[];
 
                         previousInputs.Add(input.ToString());
-                        if (previousInputs.Count > (maxPrevInputs + 1))
+                        if (previousInputs.Count > maxPrevInputs + 1)
                             previousInputs.RemoveAt(0);
 
                         // In the pretrained SP with HPC, the TM will quickly learn cells for patterns
@@ -187,9 +189,9 @@ namespace NeoCortexApi.Experiments
                     }
 
                     // The first element (a single element) in the sequence cannot be predicted
-                    double maxPossibleAccuraccy = (double)((double)sequenceKeyPair.Value.Count - 1) / (double)sequenceKeyPair.Value.Count * 100.0;
+                    double maxPossibleAccuraccy = (double)((double)sequenceKeyPair.Value.Count - 1) / sequenceKeyPair.Value.Count * 100.0;
 
-                    double accuracy = (double)matches / (double)sequenceKeyPair.Value.Count * 100.0;
+                    double accuracy = matches / (double)sequenceKeyPair.Value.Count * 100.0;
 
                     if (accuracy >= maxPossibleAccuraccy)
                     {
@@ -214,14 +216,14 @@ namespace NeoCortexApi.Experiments
 
         private static string GetKey(List<string> prevInputs, double input, string sequence)
         {
-            string key = String.Empty;
+            string key = string.Empty;
 
             for (int i = 0; i < prevInputs.Count; i++)
             {
                 if (i > 0)
                     key += "-";
 
-                key += (prevInputs[i]);
+                key += prevInputs[i];
             }
 
             return $"{sequence}_{key}";
@@ -239,7 +241,7 @@ namespace NeoCortexApi.Experiments
         [TestMethod]
         public void CheckNextInputValue()
         {
-            Connections mem= null;
+            Connections mem = null;
             HtmClassifier<string, ComputeCycle> cls = new HtmClassifier<string, ComputeCycle>();
 
             CortexLayer<object, object> layer1 = new CortexLayer<object, object>("L1");
@@ -248,7 +250,7 @@ namespace NeoCortexApi.Experiments
 
             sequences.Add("S1", new List<double>(new double[] { 0.0, 1.0, 2.0, 3.0, 4.0, 2.0, 5.0, }));
 
-            createHtmClassifier(mem, layer1, cls,sequences);
+            createHtmClassifier(mem, layer1, cls, sequences);
 
             //var tm = layer1.HtmModules.FirstOrDefault(m => m.Value is TemporalMemory);
             //((TemporalMemory)tm.Value).Reset(mem);
@@ -268,4 +270,5 @@ namespace NeoCortexApi.Experiments
             }
         }
     }
+
 }

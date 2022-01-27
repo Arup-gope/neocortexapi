@@ -27,8 +27,8 @@ namespace NeoCortexApiSample
             //SequenceLearning experiment = new SequenceLearning();
             //experiment.Run();
 
-            RunMultiSimpleSequenceLearningExperiment();
-            //RunMultiSequenceLearningExperiment();
+            //RunMultiSimpleSequenceLearningExperiment();
+            RunMultiSequenceLearningExperiment();
         }
 
         private static void RunMultiSimpleSequenceLearningExperiment()
@@ -67,12 +67,13 @@ namespace NeoCortexApiSample
 
             predictor.Reset();
             PredictNextElement(predictor, list1);
-
+            
             predictor.Reset();
             PredictNextElement(predictor, list2);
 
             predictor.Reset();
             PredictNextElement(predictor, list3);
+            
         }
 
         private static void PredictNextElement(HtmPredictionEngine predictor, double[] list)
@@ -92,7 +93,7 @@ namespace NeoCortexApiSample
 
                     var tokens = res.First().PredictedInput.Split('_');
                     var tokens2 = res.First().PredictedInput.Split('-');
-                    Debug.WriteLine($"Predicted Sequence: {tokens[0]}, predicted next element {tokens2[tokens.Length - 1]}");
+                    Debug.WriteLine($"For input: {item}, Predicted Sequence: {tokens[0]}, predicted next element {tokens2[tokens.Length - 1]}");
                 }
                 else
                     Debug.WriteLine("Nothing predicted :(");
