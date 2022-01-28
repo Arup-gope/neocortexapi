@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmClassifierUnitTest", "HtmClassifierUnitTest\HtmClassifierUnitTest.csproj", "{23F24659-DA94-4A2D-8867-14616CD42B5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HtmClassifierUnitTest", "HtmClassifierUnitTest\HtmClassifierUnitTest.csproj", "{23F24659-DA94-4A2D-8867-14616CD42B5F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoCortexEntities", "NeoCortexEntities\NeoCortexEntities.csproj", "{876A52A9-AD08-4371-8FD7-FB9C7F0C0899}"
 EndProject
@@ -12,6 +12,11 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoCortexApi", "NeoCortexApi\NeoCortexApi.csproj", "{84D0AC62-C8A5-4F54-8574-ED7D479DD492}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoCortexArrayLib", "NeoCortexArrayLib\NeoCortexArrayLib.csproj", "{F14529B8-1BF3-4E54-95AC-3C6B0903B169}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{506DAB34-5942-4477-A09D-CC47E992C730}"
+	ProjectSection(SolutionItems) = preProject
+		Documentation\HtmClassifierUnitTest.txt = Documentation\HtmClassifierUnitTest.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
