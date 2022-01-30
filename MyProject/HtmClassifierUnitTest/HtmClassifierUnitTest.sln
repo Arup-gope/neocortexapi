@@ -5,14 +5,6 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HtmClassifierUnitTest", "HtmClassifierUnitTest\HtmClassifierUnitTest.csproj", "{23F24659-DA94-4A2D-8867-14616CD42B5F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoCortexEntities", "NeoCortexEntities\NeoCortexEntities.csproj", "{876A52A9-AD08-4371-8FD7-FB9C7F0C0899}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoCortexUtils", "NeoCortexUtils\NeoCortexUtils.csproj", "{2ED9BCC7-E0E3-41DA-9D87-8E2A9CA46110}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoCortexApi", "NeoCortexApi\NeoCortexApi.csproj", "{84D0AC62-C8A5-4F54-8574-ED7D479DD492}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoCortexArrayLib", "NeoCortexArrayLib\NeoCortexArrayLib.csproj", "{F14529B8-1BF3-4E54-95AC-3C6B0903B169}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{506DAB34-5942-4477-A09D-CC47E992C730}"
 	ProjectSection(SolutionItems) = preProject
 		Documentation\HtmClassifierUnitTest.txt = Documentation\HtmClassifierUnitTest.txt
@@ -28,22 +20,6 @@ Global
 		{23F24659-DA94-4A2D-8867-14616CD42B5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23F24659-DA94-4A2D-8867-14616CD42B5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23F24659-DA94-4A2D-8867-14616CD42B5F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{876A52A9-AD08-4371-8FD7-FB9C7F0C0899}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{876A52A9-AD08-4371-8FD7-FB9C7F0C0899}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{876A52A9-AD08-4371-8FD7-FB9C7F0C0899}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{876A52A9-AD08-4371-8FD7-FB9C7F0C0899}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2ED9BCC7-E0E3-41DA-9D87-8E2A9CA46110}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2ED9BCC7-E0E3-41DA-9D87-8E2A9CA46110}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2ED9BCC7-E0E3-41DA-9D87-8E2A9CA46110}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2ED9BCC7-E0E3-41DA-9D87-8E2A9CA46110}.Release|Any CPU.Build.0 = Release|Any CPU
-		{84D0AC62-C8A5-4F54-8574-ED7D479DD492}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{84D0AC62-C8A5-4F54-8574-ED7D479DD492}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{84D0AC62-C8A5-4F54-8574-ED7D479DD492}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{84D0AC62-C8A5-4F54-8574-ED7D479DD492}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F14529B8-1BF3-4E54-95AC-3C6B0903B169}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F14529B8-1BF3-4E54-95AC-3C6B0903B169}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F14529B8-1BF3-4E54-95AC-3C6B0903B169}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F14529B8-1BF3-4E54-95AC-3C6B0903B169}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
