@@ -21,14 +21,21 @@ namespace HtmClassifierUnitTest
     [TestClass]
     public class HtmClassifierTest
     {
-        private void createHtmClassifier(Connections mem, CortexLayer<object, object> layer1,
-            HtmClassifier<string, ComputeCycle> cls,
-            Dictionary<string, List<double>> sequences)
-        {
-            int inputBits = 100;
-            int numColumns = 1024;
 
-            HtmConfig cfg = new HtmConfig(new int[] { inputBits }, new int[] { numColumns })
+
+        private int inputBits = 100;
+        private int numColumns = 1024;
+        private HtmConfig cfg;
+        Dictionary<string, object> settings;
+        private double max;
+        private Connections mem = null;
+        private CortexLayer<object, object> layer;
+        private HtmClassifier<string, ComputeCycle> htmClassifier;
+        private Dictionary<string, List<double>> sequences;
+
+        private void setupHtmConfiguration()
+        {
+            cfg = new HtmConfig(new int[] { inputBits }, new int[] { numColumns })
             {
                 Random = new ThreadSafeRandom(42),
 
@@ -54,10 +61,11 @@ namespace HtmClassifierUnitTest
                 // Used by punishing of segments.
                 PredictedSegmentDecrement = 0.1
             };
+        }
 
-            double max = 20;
-
-            Dictionary<string, object> settings = new Dictionary<string, object>()
+        private void setupDictionary()
+        {
+            settings = new Dictionary<string, object>()
             {
                 { "W", 15},
                 { "N", inputBits},
@@ -68,24 +76,29 @@ namespace HtmClassifierUnitTest
                 { "ClipInput", false},
                 { "MaxVal", max}
             };
+        }
 
+        [TestInitialize]
+        private void setup()
+        {
+            mem = null;
+            htmClassifier = new HtmClassifier<string, ComputeCycle>();
+            layer = new CortexLayer<object, object>("L1");
+            mem = new Connections(cfg);
+            setupHtmConfiguration();
+            setupDictionary();
+        }
+        private void LearnHtmClassifier()
+        {
             int maxMatchCnt = 0;
 
             EncoderBase encoder = new ScalarEncoder(settings);
-
-            mem = new Connections(cfg);
-
-            //HtmClassifier<string, ComputeCycle> cls = new HtmClassifier<string, ComputeCycle>();
-
-            //CortexLayer<object, object> layer1 = new CortexLayer<object, object>("L1");
-
             TemporalMemory tm = new TemporalMemory();
-
             SpatialPoolerMT sp = new SpatialPoolerMT();
             sp.Init(mem);
             tm.Init(mem);
-            layer1.HtmModules.Add("encoder", encoder);
-            layer1.HtmModules.Add("sp", sp);
+            layer.HtmModules.Add("encoder", encoder);
+            layer.HtmModules.Add("sp", sp);
 
             //double[] inputs = inputValues.ToArray();
             int[] prevActiveCols = new int[0];
@@ -100,21 +113,18 @@ namespace HtmClassifierUnitTest
             for (int i = 0; i < maxCycles; i++)
             {
                 matches = 0;
-
                 cycle++;
-
-
                 foreach (var inputs in sequences)
                 {
                     foreach (var input in inputs.Value)
                     {
 
-                        var lyrOut = layer1.Compute(input, true);
+                        var lyrOut = layer.Compute(input, true);
                     }
                 }
             }
 
-            layer1.HtmModules.Add("tm", tm);
+            layer.HtmModules.Add("tm", tm);
 
             foreach (var sequenceKeyPair in sequences)
             {
@@ -136,9 +146,9 @@ namespace HtmClassifierUnitTest
                     foreach (var input in sequenceKeyPair.Value)
                     {
 
-                        var lyrOut = layer1.Compute(input, true) as ComputeCycle;
+                        var lyrOut = layer.Compute(input, true) as ComputeCycle;
 
-                        var activeColumns = layer1.GetResult("sp") as int[];
+                        var activeColumns = layer.GetResult("sp") as int[];
 
                         previousInputs.Add(input.ToString());
                         if (previousInputs.Count > maxPrevInputs + 1)
@@ -165,7 +175,7 @@ namespace HtmClassifierUnitTest
                             actCells = lyrOut.WinnerCells;
                         }
 
-                        cls.Learn(key, actCells.ToArray());
+                        htmClassifier.Learn(key, actCells.ToArray());
 
                         //
                         // If the list of predicted values from the previous step contains the currently presenting value,
@@ -178,7 +188,7 @@ namespace HtmClassifierUnitTest
                         if (lyrOut.PredictiveCells.Count > 0)
                         {
                             //var predictedInputValue = cls.GetPredictedInputValue(lyrOut.PredictiveCells.ToArray());
-                            var predictedInputValues = cls.GetPredictedInputValues(lyrOut.PredictiveCells.ToArray(), 3);
+                            var predictedInputValues = htmClassifier.GetPredictedInputValues(lyrOut.PredictiveCells.ToArray(), 3);
 
                             lastPredictedValues = predictedInputValues.Select(v => v.PredictedInput).ToList();
                         }
@@ -241,33 +251,22 @@ namespace HtmClassifierUnitTest
         [TestMethod]
         public void CheckNextInputValue()
         {
-            Connections mem = null;
-            HtmClassifier<string, ComputeCycle> cls = new HtmClassifier<string, ComputeCycle>();
-
-            CortexLayer<object, object> layer1 = new CortexLayer<object, object>("L1");
-
-            Dictionary<string, List<double>> sequences = new Dictionary<string, List<double>>();
-
+            sequences = new Dictionary<string, List<double>>();
             sequences.Add("S1", new List<double>(new double[] { 0.0, 1.0, 2.0, 3.0, 4.0, 2.0, 5.0, }));
 
-            createHtmClassifier(mem, layer1, cls, sequences);
+            LearnHtmClassifier();
 
             //var tm = layer1.HtmModules.FirstOrDefault(m => m.Value is TemporalMemory);
             //((TemporalMemory)tm.Value).Reset(mem);
 
-            var list = new double[] { 1.0, 2.0, 3.0 };
-            var predictedVal = new double[] { 2.0, 3.0, 4.0 };
-            var index = 0;
-            foreach (var item in list)
-            {
-                var lyrOut = layer1.Compute(item, false) as ComputeCycle;
+            var lyrOut = layer.Compute(1, false) as ComputeCycle;
 
-                var res = cls.GetPredictedInputValues(lyrOut.PredictiveCells.ToArray(), 3);
+            var res = htmClassifier.GetPredictedInputValues(lyrOut.PredictiveCells.ToArray(), 3);
 
-                var tokens = res.First().PredictedInput.Split('_');
-                var tokens2 = res.First().PredictedInput.Split('-');
-                var predictValue = Convert.ToInt32(tokens2[tokens.Length - 1]);
-            }
+            var tokens = res.First().PredictedInput.Split('_');
+            var tokens2 = res.First().PredictedInput.Split('-');
+            var predictValue = Convert.ToInt32(tokens2[tokens.Length - 1]);
+            Assert.AreEqual(2, predictValue);
         }
     }
 
