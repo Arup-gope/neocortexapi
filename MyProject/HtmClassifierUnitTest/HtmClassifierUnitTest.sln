@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HtmClassifierUnitTest", "HtmClassifierUnitTest\HtmClassifierUnitTest.csproj", "{23F24659-DA94-4A2D-8867-14616CD42B5F}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{506DAB34-5942-4477-A09D-CC47E992C730}"
 	ProjectSection(SolutionItems) = preProject
 		Documentation\GroupInformation.md = Documentation\GroupInformation.md
 		Documentation\HtmClassifierUnitTest.txt = Documentation\HtmClassifierUnitTest.txt
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{D3AA9010-0624-4FF8-A083-D05BA08BDEFA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{23F24659-DA94-4A2D-8867-14616CD42B5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{23F24659-DA94-4A2D-8867-14616CD42B5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{23F24659-DA94-4A2D-8867-14616CD42B5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{23F24659-DA94-4A2D-8867-14616CD42B5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3AA9010-0624-4FF8-A083-D05BA08BDEFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3AA9010-0624-4FF8-A083-D05BA08BDEFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3AA9010-0624-4FF8-A083-D05BA08BDEFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3AA9010-0624-4FF8-A083-D05BA08BDEFA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
