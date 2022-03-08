@@ -270,6 +270,16 @@ namespace HtmClassifierUnitTest
             var predictValue = Convert.ToInt32(tokens2[tokens.Length - 1]);
             Assert.IsTrue(predictValue > 0);
         }
+
+        [TestMethod]
+        public void NoExceptionIfCellsCountIsZero()
+        {
+            Cell[] cells = new Cell[0];
+            var res = htmClassifier.GetPredictedInputValues(cells, 3);
+            Assert.AreEqual(res.Count,0);
+        }
+
+
     }
 
 }
