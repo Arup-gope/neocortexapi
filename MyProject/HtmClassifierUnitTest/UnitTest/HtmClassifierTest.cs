@@ -279,6 +279,23 @@ namespace HtmClassifierUnitTest
             Assert.AreEqual(res.Count,0);
         }
 
+        [DataTestMethod]
+        [DataRow(3)]
+        [DataRow(4)]
+        [TestMethod]
+        public void CheckHowManyOfGetPredictedInputValues(int howMany)
+        {
+            sequences = new Dictionary<string, List<double>>();
+            sequences.Add("S1", new List<double>(new double[] { 0.0, 1.0, 2.0, 3.0, 4.0, 2.0, 5.0, }));
+
+            LearnHtmClassifier();
+
+            var lyrOut = layer.Compute(1, false) as ComputeCycle;
+
+            var res = htmClassifier.GetPredictedInputValues(lyrOut.PredictiveCells.ToArray(), Convert.ToInt16(howMany));
+
+            Assert.IsTrue(res.Count==howMany);
+        }
 
     }
 
