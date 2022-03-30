@@ -240,28 +240,30 @@ namespace HtmClassifierUnitTest
 
             return $"{sequence}_{key}";
         }
-        /// <summary>
-        ///Htm Sparsity is the ratio between Width and InputBits(W/N). This unit test runs in a loop and saves cycle at which
-        ///we get 100% match for the first time at Sparsity=0.18. W and N can be changed but the ratio must be 0.18.
-        ///This program has 2 loops (loop inside a loop), the parent loop/outer loop is defined keeping in mind how many
-        ///readings are wanted in the result. The child loop/inner loop has 460 cycle, but is ended as soon as we get 100%
-        ///match i.e. for max=10 10 out 10 matches. Then the parent loop is incremented and it continues for the number of
-        ///loops defined (in our case we used 1000 - 10000 loops).
-        ///"We found out that, for max=10 ideal HTM Sparsity is 0.18"
-        /// </summary>
 
+
+        /// <summary>
+        /// Here our taget is to whether 
+        /// we are getting any predicted value for input
+        /// we have given one sequence s1
+        /// and check from this sequence each input, 
+        /// will we get prediction or not
+        /// </summary>
+        [DataTestMethod]
+        [DataRow(0)]
+        [DataRow(1)]
         [TestMethod]
-        public void CheckNextValueIsNotEmpty()
+        public void CheckNextValueIsNotEmpty(int input)
         {
             sequences = new Dictionary<string, List<double>>();
-            sequences.Add("S1", new List<double>(new double[] { 0.0, 1.0, 2.0, 3.0, 4.0, 2.0, 5.0, }));
+            sequences.Add("S1", new List<double>(new double[] { 0.0, 1.0, 2.0, 3.0, 4.0, 2.0, 5.0 }));
 
             LearnHtmClassifier();
 
             //var tm = layer1.HtmModules.FirstOrDefault(m => m.Value is TemporalMemory);
             //((TemporalMemory)tm.Value).Reset(mem);
 
-            var lyrOut = layer.Compute(1, false) as ComputeCycle;
+            var lyrOut = layer.Compute(input, false) as ComputeCycle;
 
             var res = htmClassifier.GetPredictedInputValues(lyrOut.PredictiveCells.ToArray(), 3);
 
@@ -270,7 +272,11 @@ namespace HtmClassifierUnitTest
             var predictValue = Convert.ToInt32(tokens2[tokens.Length - 1]);
             Assert.IsTrue(predictValue > 0);
         }
-
+        
+        /// <summary>
+        ///Here we are checking if cells count is zero
+        ///will we get any kind of exception or not
+        /// </summary>
         [TestMethod]
         public void NoExceptionIfCellsCountIsZero()
         {
@@ -278,7 +284,12 @@ namespace HtmClassifierUnitTest
             var res = htmClassifier.GetPredictedInputValues(cells, 3);
             Assert.AreEqual(res.Count,0);
         }
-
+        
+        
+        /// <summary>
+        ///Check how many records will we get  classifier result 
+        ///will we get based on passing howMany input in GetPredictedInputValues
+        /// </summary>
         [DataTestMethod]
         [DataRow(3)]
         [DataRow(4)]
